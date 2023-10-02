@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 import { ComponentItemConfig, ItemConfig, RowOrColumnItemConfig, StackItemConfig } from '../config/config'
 import { ResolvedRowOrColumnItemConfig, ResolvedStackItemConfig } from '../config/resolved-config'
 import { Splitter } from '../controls/splitter'
@@ -58,6 +60,9 @@ export class RowOrColumn extends ContentItem {
         this._splitterPosition = null;
         this._splitterMinPosition = null;
         this._splitterMaxPosition = null;
+
+        this.id = nanoid();
+        layoutManager.emit('rowOrColumnCreated', this.id, this);
 
         switch (config.type) {
             case ItemType.row:

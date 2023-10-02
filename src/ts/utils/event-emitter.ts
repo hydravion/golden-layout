@@ -1,6 +1,7 @@
 import { BrowserPopout } from '../controls/browser-popout';
 import { Tab } from '../controls/tab';
 import { ComponentItem } from '../items/component-item';
+import { RowOrColumn } from '../items/row-or-column';
 
 /**
  * A generic and very fast EventEmitter implementation. On top of emitting the actual event it emits an
@@ -191,6 +192,7 @@ export namespace EventEmitter {
         "open": NoParams;
         "popIn": NoParams;
         "resize": NoParams;
+        "rowOrColumnCreated": RowOrColumnCreatedParams;
         "show": NoParams;
         /** @deprecated - use show instead */
         "shown": NoParams;
@@ -225,6 +227,7 @@ export namespace EventEmitter {
     export type BeforeComponentReleaseParams = [component: unknown];
     export type ClickBubblingEventParam = [ClickBubblingEvent];
     export type TouchStartBubblingEventParam = [TouchStartBubblingEvent];
+    export type RowOrColumnCreatedParams = [id: string, rowOrColumn: RowOrColumn];
 
     export class BubblingEvent {
         /** @internal */

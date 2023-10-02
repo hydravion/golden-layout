@@ -523,6 +523,8 @@ export namespace EventEmitter {
         // (undocumented)
         "resize": NoParams;
         // (undocumented)
+        "rowOrColumnCreated": RowOrColumnCreatedParams;
+        // (undocumented)
         "show": NoParams;
         // @deprecated (undocumented)
         "shown": NoParams;
@@ -549,6 +551,8 @@ export namespace EventEmitter {
     export type NoParams = [];
     // (undocumented)
     export type PopoutParam = [BrowserPopout];
+    // (undocumented)
+    export type RowOrColumnCreatedParams = [id: string, rowOrColumn: RowOrColumn];
     // (undocumented)
     export type StringParam = [string];
     // (undocumented)
