@@ -2884,6 +2884,7 @@ export declare class RowOrColumn extends ContentItem {
      * @internal
      */
     private createSplitter;
+    private tabulaDragSplitter;
     /**
      * Locates the instance of Splitter in the array of
      * registered splitters and returns a map containing the contentItem

@@ -1940,6 +1940,7 @@ export declare class RowOrColumn extends ContentItem {
     /* Excluded from this release type: calculateRelativeSizes */
     /* Excluded from this release type: respectMinItemSize */
     /* Excluded from this release type: createSplitter */
+    private tabulaDragSplitter;
     /* Excluded from this release type: getSplitItems */
     private calculateContentItemMinSize;
     /* Excluded from this release type: calculateContentItemsTotalMinSize */

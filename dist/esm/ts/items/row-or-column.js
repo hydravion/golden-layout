@@ -502,6 +502,25 @@ export class RowOrColumn extends ContentItem {
         this._splitter.splice(index, 0, splitter);
         return splitter;
     }
+    tabulaDragSplitter(splitterIndex, beforeWidth, afterSize, beforeMinSize, afterMinSize, offset, offsetPixels, splitterPositionInRange, totalRelativeSize) {
+        const splitter = this._splitter[splitterIndex];
+        const items = this.getSplitItems(splitter);
+        this._splitterPosition = 0;
+        this._splitterMinPosition = -1 * (beforeWidth - beforeMinSize);
+        this._splitterMaxPosition = afterSize - afterMinSize;
+        this._splitterPosition = offset;
+        if (this._isColumn) {
+            splitter.element.style.top = offsetPixels;
+        }
+        else {
+            splitter.element.style.left = offsetPixels;
+        }
+        items.before.size = splitterPositionInRange * totalRelativeSize;
+        items.after.size = (1 - splitterPositionInRange) * totalRelativeSize;
+        splitter.element.style.top = numberToPixels(0);
+        splitter.element.style.left = numberToPixels(0);
+        globalThis.requestAnimationFrame(() => this.updateSize(false));
+    }
     /**
      * Locates the instance of Splitter in the array of
      * registered splitters and returns a map containing the contentItem

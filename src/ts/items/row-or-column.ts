@@ -604,15 +604,15 @@ export class RowOrColumn extends ContentItem {
         return splitter;
     }
 
-    private tabulaDragSplitter(splitterIndex,
-                                beforeWidth,
-                                afterSize,
-                                beforeMinSize,
-                                afterMinSize,
-                                offset,
-                                offsetPixels,
-                                splitterPositionInRange,
-                                totalRelativeSize) {
+    private tabulaDragSplitter(splitterIndex: number,
+                                beforeWidth: number,
+                                afterSize: number,
+                                beforeMinSize: number,
+                                afterMinSize: number,
+                                offset: number,
+                                offsetPixels: string,
+                                splitterPositionInRange: number,
+                                totalRelativeSize: number) {
       const splitter = this._splitter[splitterIndex];
       const items = this.getSplitItems(splitter);
       this._splitterPosition = 0;
