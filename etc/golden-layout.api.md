@@ -529,6 +529,8 @@ export namespace EventEmitter {
         // @deprecated (undocumented)
         "shown": NoParams;
         // (undocumented)
+        "splitterDragged": SplitterDraggedParams;
+        // (undocumented)
         "stackHeaderClick": ClickBubblingEventParam;
         // (undocumented)
         "stackHeaderTouchStart": TouchStartBubblingEventParam;
@@ -553,6 +555,19 @@ export namespace EventEmitter {
     export type PopoutParam = [BrowserPopout];
     // (undocumented)
     export type RowOrColumnCreatedParams = [id: string, rowOrColumn: RowOrColumn];
+    // (undocumented)
+    export type SplitterDraggedParams = [
+    splitterId: string,
+    index: number,
+    beforeWidth: number,
+    afterSize: number,
+    beforeMinSize: number,
+    afterMinSize: number,
+    offset: number,
+    offsetPixels: string,
+    splitterPositionInRange: number,
+    totalRelativeSize: number
+    ];
     // (undocumented)
     export type StringParam = [string];
     // (undocumented)

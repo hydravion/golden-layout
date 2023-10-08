@@ -515,6 +515,7 @@ export declare namespace EventEmitter {
         "popIn": NoParams;
         "resize": NoParams;
         "rowOrColumnCreated": RowOrColumnCreatedParams;
+        "splitterDragged": SplitterDraggedParams;
         "show": NoParams;
         /** @deprecated - use show instead */
         "shown": NoParams;
@@ -549,6 +550,18 @@ export declare namespace EventEmitter {
     export type ClickBubblingEventParam = [ClickBubblingEvent];
     export type TouchStartBubblingEventParam = [TouchStartBubblingEvent];
     export type RowOrColumnCreatedParams = [id: string, rowOrColumn: RowOrColumn];
+    export type SplitterDraggedParams = [
+    splitterId: string,
+    index: number,
+    beforeWidth: number,
+    afterSize: number,
+    beforeMinSize: number,
+    afterMinSize: number,
+    offset: number,
+    offsetPixels: string,
+    splitterPositionInRange: number,
+    totalRelativeSize: number
+    ];
     export class BubblingEvent {
         /* Excluded from this release type: _name */
         /* Excluded from this release type: _target */

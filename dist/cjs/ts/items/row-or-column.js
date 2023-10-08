@@ -459,10 +459,49 @@ class RowOrColumn extends content_item_1.ContentItem {
      * @internal
      */
     createSplitter(index) {
+        console.log('this inside of modified createSplitter', this);
         const splitter = new splitter_1.Splitter(this._isColumn, this._splitterSize, this._splitterGrabSize);
         splitter.on('drag', (offsetX, offsetY) => this.onSplitterDrag(splitter, offsetX, offsetY));
         splitter.on('dragStop', () => this.onSplitterDragStop(splitter));
         splitter.on('dragStart', () => this.onSplitterDragStart(splitter));
+        // await initialisedPromise;
+        let beforeWidth;
+        let afterSize;
+        let beforeMinSize;
+        let afterMinSize;
+        let offset;
+        let offsetPixels;
+        console.log('Setting drag listeners for splitter with index in tab with id', [index]);
+        splitter.on('dragStart', () => {
+            console.log('rowOrColumn inside of dragStart listener', this);
+            const items = this.getSplitItems(splitter);
+            beforeWidth = (0, utils_1.pixelsToNumber)(items.before.element.style[this._dimension]);
+            afterSize = (0, utils_1.pixelsToNumber)(items.after.element.style[this._dimension]);
+            beforeMinSize = this.calculateContentItemsTotalMinSize(items.before.contentItems);
+            afterMinSize = this.calculateContentItemsTotalMinSize(items.after.contentItems);
+        });
+        splitter.on('drag', (offsetX, offsetY) => {
+            offset = this._isColumn ? offsetY : offsetX;
+            if (this._splitterMinPosition === null || this._splitterMaxPosition === null) {
+                throw new internal_error_1.UnexpectedNullError('ROCOSD59226');
+            }
+            offset = Math.max(offset, this._splitterMinPosition);
+            offset = Math.min(offset, this._splitterMaxPosition);
+            offsetPixels = (0, utils_1.numberToPixels)(offset);
+        });
+        splitter.on('dragStop', () => {
+            if (this._splitterPosition === null) {
+                throw new internal_error_1.UnexpectedNullError('ROCOSDS66932');
+            }
+            else {
+                const items = this.getSplitItems(splitter);
+                const sizeBefore = (0, utils_1.pixelsToNumber)(items.before.element.style[this._dimension]);
+                const sizeAfter = (0, utils_1.pixelsToNumber)(items.after.element.style[this._dimension]);
+                const splitterPositionInRange = (this._splitterPosition + sizeBefore) / (sizeBefore + sizeAfter);
+                const totalRelativeSize = items.before.size + items.after.size;
+                this.layoutManager.emit('splitterDragged', this.id, index, beforeWidth, afterSize, beforeMinSize, afterMinSize, offset, offsetPixels, splitterPositionInRange, totalRelativeSize);
+            }
+        });
         this._splitter.splice(index, 0, splitter);
         return splitter;
     }
