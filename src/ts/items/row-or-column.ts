@@ -544,10 +544,64 @@ export class RowOrColumn extends ContentItem {
      * @internal
      */
     private createSplitter(index: number): Splitter {
+        console.log('this inside of modified createSplitter', this);
         const splitter = new Splitter(this._isColumn, this._splitterSize, this._splitterGrabSize);
         splitter.on('drag', (offsetX, offsetY) => this.onSplitterDrag(splitter, offsetX, offsetY));
         splitter.on('dragStop', () => this.onSplitterDragStop(splitter));
         splitter.on('dragStart', () => this.onSplitterDragStart(splitter));
+
+        // await initialisedPromise;
+
+        let beforeWidth;
+        let afterSize;
+        let beforeMinSize;
+        let afterMinSize;
+        let offset;
+        let offsetPixels;
+        console.log('Setting drag listeners for splitter with index in tab with id', [index]);
+        splitter.on('dragStart', () => {
+          console.log('rowOrColumn inside of dragStart listener', this);
+          let items = this.getSplitItems(splitter);
+          beforeWidth = pixelsToNumber(items.before.element.style[this._dimension]);
+          afterSize = pixelsToNumber(items.after.element.style[this._dimension]);
+          beforeMinSize = this.calculateContentItemsTotalMinSize(items.before.contentItems);
+          afterMinSize = this.calculateContentItemsTotalMinSize(items.after.contentItems);
+        });
+        splitter.on('drag', (offsetX, offsetY) => {
+          offset = this._isColumn ? offsetY : offsetX;
+          // if (rowOrColumn._splitterMinPosition === null || rowOrColumn._splitterMaxPosition === null) {
+          //     throw new UnexpectedNullError('ROCOSD59226');
+          // }
+          offset = Math.max(offset, this._splitterMinPosition);
+          offset = Math.min(offset, this._splitterMaxPosition);
+          offsetPixels = numberToPixels(offset);
+        });
+        splitter.on('dragStop', () => {
+          // if (this._splitterPosition === null) {
+          //     throw new UnexpectedNullError('ROCOSDS66932');
+          // }
+          // else {
+              let items = this.getSplitItems(splitter);
+              let sizeBefore = pixelsToNumber(items.before.element.style[this._dimension]);
+              let sizeAfter = pixelsToNumber(items.after.element.style[this._dimension]);
+              let splitterPositionInRange = (this._splitterPosition + sizeBefore) / (sizeBefore + sizeAfter);
+              let totalRelativeSize = items.before.size + items.after.size;
+
+          // }
+
+
+          this.layoutManager.emit('splitterDragged', this.id,
+                                                      index,
+                                                      beforeWidth,
+                                                      afterSize,
+                                                      beforeMinSize,
+                                                      afterMinSize,
+                                                      offset,
+                                                      offsetPixels,
+                                                      splitterPositionInRange,
+                                                      totalRelativeSize);
+        });
+
         this._splitter.splice(index, 0, splitter);
         return splitter;
     }
