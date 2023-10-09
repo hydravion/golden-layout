@@ -61,8 +61,12 @@ export class RowOrColumn extends ContentItem {
         this._splitterMinPosition = null;
         this._splitterMaxPosition = null;
 
-        this.id = nanoid();
-        layoutManager.emit('rowOrColumnCreated', this.id, this);
+        // do not overwrite this.id if it has already been defined
+        // e.g. in the persisted layout
+        if(!this.id) {
+          this.id = nanoid();
+          layoutManager.emit('rowOrColumnCreated', this.id, this);
+        }
 
         switch (config.type) {
             case ItemType.row:
