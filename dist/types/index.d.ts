@@ -549,7 +549,7 @@ export declare namespace EventEmitter {
     export type BeforeComponentReleaseParams = [component: unknown];
     export type ClickBubblingEventParam = [ClickBubblingEvent];
     export type TouchStartBubblingEventParam = [TouchStartBubblingEvent];
-    export type RowOrColumnCreatedParams = [id: string, rowOrColumn: RowOrColumn];
+    export type RowOrColumnCreatedParams = [rowOrColumn: RowOrColumn];
     export type SplitterDraggedParams = [
     splitterId: string,
     index: number,

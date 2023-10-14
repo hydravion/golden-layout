@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RowOrColumn = void 0;
-const nanoid_1 = require("nanoid");
 const config_1 = require("../config/config");
 const splitter_1 = require("../controls/splitter");
 const internal_error_1 = require("../errors/internal-error");
@@ -28,16 +27,11 @@ class RowOrColumn extends content_item_1.ContentItem {
         this._splitterPosition = null;
         this._splitterMinPosition = null;
         this._splitterMaxPosition = null;
-        // do not overwrite this.id if it has already been defined
-        // e.g. in the persisted layout
-        if (!this.id) {
-            this.id = (0, nanoid_1.nanoid)();
-            layoutManager.emit('rowOrColumnCreated', this.id, this);
-        }
         switch (config.type) {
             case types_1.ItemType.row:
             case types_1.ItemType.column:
                 this._configType = config.type;
+                layoutManager.emit('rowOrColumnCreated', this);
                 break;
             default:
                 throw new internal_error_1.AssertError('ROCCCT00925');

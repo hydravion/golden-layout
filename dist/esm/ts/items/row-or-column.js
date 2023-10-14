@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { ItemConfig } from '../config/config';
 import { Splitter } from '../controls/splitter';
 import { AssertError, UnexpectedNullError } from '../errors/internal-error';
@@ -25,16 +24,11 @@ export class RowOrColumn extends ContentItem {
         this._splitterPosition = null;
         this._splitterMinPosition = null;
         this._splitterMaxPosition = null;
-        // do not overwrite this.id if it has already been defined
-        // e.g. in the persisted layout
-        if (!this.id) {
-            this.id = nanoid();
-            layoutManager.emit('rowOrColumnCreated', this.id, this);
-        }
         switch (config.type) {
             case ItemType.row:
             case ItemType.column:
                 this._configType = config.type;
+                layoutManager.emit('rowOrColumnCreated', this);
                 break;
             default:
                 throw new AssertError('ROCCCT00925');

@@ -554,7 +554,7 @@ export namespace EventEmitter {
     // (undocumented)
     export type PopoutParam = [BrowserPopout];
     // (undocumented)
-    export type RowOrColumnCreatedParams = [id: string, rowOrColumn: RowOrColumn];
+    export type RowOrColumnCreatedParams = [rowOrColumn: RowOrColumn];
     // (undocumented)
     export type SplitterDraggedParams = [
     splitterId: string,
